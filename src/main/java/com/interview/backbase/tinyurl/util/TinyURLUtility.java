@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class TinyURLUtility {
 	
 	private static String REGEX= "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+	
 	private static final char[] corpus   = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
     /**
      *  This method is to check if URL submitted for compression is a valid URL or not. This method expects a URL input as String 
@@ -30,12 +31,16 @@ public class TinyURLUtility {
      */
 public static String convertIntoBase62(long seed) {
 		
-		String uniqValue=seed+"";
+		String uniqValue=Long.toString(seed);
 		char[] seedBuf= new char[uniqValue.length()];
+		
 		int seedIndex =  uniqValue.length()-1;
+		
 		BigInteger seedValue = new BigInteger(uniqValue);
 		BigInteger base= BigInteger.valueOf(62);
+		
 		while(seedValue.compareTo(base) >=0) {
+			
 			seedBuf[seedIndex--]=corpus[seedValue.mod(base).intValue()];
 			seedValue =seedValue.divide(base);
 		}

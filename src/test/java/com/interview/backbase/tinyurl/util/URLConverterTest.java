@@ -1,34 +1,31 @@
 package com.interview.backbase.tinyurl.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
-
-import com.interview.backbase.tinyurl.exception.RecordNotFoundException;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+@SpringBootTest
 public class URLConverterTest {
 
-	@Test
-	public void testconvertAndSaveURL() {
-		String url="https://stash.backbase.com/projects/PO/repos/payment-order-integration-spec/browse/src/main/resources/schemas/definitions.json#38";
-		String tinyURL=URLConverter.convertAndSaveURL(url);
-		assertEquals("bM",tinyURL);
-	}
+	@Autowired
+	URLConverter urlconverter;
 	
 	@Test
-	public void testfetchOriginalURLFromtinyURL() {
-		String url="https://stash.backbase.com/projects/PO/repos/payment-order-integration-spec/browse/src/main/resources/schemas/definitions.json";
-		String tinyURL=URLConverter.convertAndSaveURL(url);
-		assertEquals("bN",tinyURL);
-		
-		assertEquals(url,URLConverter.covertTinyURLToOriginal(tinyURL));
+	@DirtiesContext
+	public void testconvertAndSaveURL() {
+		String url = "https://stash.backbase.com/projects/PO/repos/payment-order-integration-spec/browse/src/main/resources/schemas/definitions.json#38";
+		String tinyURL = urlconverter.convertURL(url);
+		assertEquals("bM", tinyURL);
 	}
 
 	@Test
-	public void testRecordNotFoundException() {
-		
-		Exception exception = assertThrows(RecordNotFoundException.class,()->{ URLConverter.covertTinyURLToOriginal("TEST");});
-		assertEquals(exception.getMessage(), "Mapping for tinyURL to original not found");
+	@DirtiesContext
+	public void testfetchOriginalURLFromtinyURL() {
+		String url = "https://stash.backbase.com/projects/PO/repos/payment-order-integration-spec/browse/src/main/resources/schemas/definitions.json";
+		String tinyURL = urlconverter.convertURL(url);
+		assertEquals("bM", tinyURL);
 	}
+
 }

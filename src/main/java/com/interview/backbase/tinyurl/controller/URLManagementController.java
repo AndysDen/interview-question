@@ -47,7 +47,7 @@ public class URLManagementController {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Provided URL is Incorrect or Invalid");
 	        }
                String filteredURL =TinyURLUtility.filterSpecialCharacterFromURL(url);
-	        String tinyExpression = tinyURLConverterService.convertOriginalToTinyURL(filteredURL);
+	        String tinyExpression = tinyURLConverterService.convertToTinyURL(filteredURL);
 	        return ResponseEntity.status(HttpStatus.CREATED)
 	                .body(tinyExpression);
 	    }
@@ -62,7 +62,7 @@ public class URLManagementController {
 	    public ResponseEntity<String> convertToOriginalURL(@RequestParam(name = "tiny") String tinyURL) {
 	        LOGGER.info("fetching Original url for tinyURL tinyURL={}", tinyURL);
 	        try {
-	            String longURL = tinyURLConverterService.convertTinyToOriginalURL(tinyURL);
+	            String longURL = tinyURLConverterService.fetchOriginalURL(tinyURL);
 	            return ResponseEntity.status(HttpStatus.OK)
 	                    .body(longURL);
 	        } catch (RecordNotFoundException e) {

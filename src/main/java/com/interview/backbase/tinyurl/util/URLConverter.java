@@ -1,26 +1,19 @@
 package com.interview.backbase.tinyurl.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.interview.backbase.tinyurl.exception.RecordNotFoundException;
-
+import org.springframework.stereotype.Component;
+@Component
 public class URLConverter {
 
-	private static long seedValue=100l; 
-	private static Map<String,String> tinyURLMap = new HashMap<>();
 	
-	public synchronized static String convertAndSaveURL(String url) {
+	private  long seedValue = 100l;
+
+	public synchronized  String convertURL(String url) {
 		
-		      String tinyURL =TinyURLUtility.convertIntoBase62(seedValue++);		
-		      tinyURLMap.put(tinyURL,url);
-		      
-		      return tinyURL;
+
+		String tinyURL = TinyURLUtility.convertIntoBase62(seedValue++);
+		return tinyURL;
 	}
-public synchronized static String  covertTinyURLToOriginal(String tinyURL) {
 	
-	  if(! tinyURLMap.containsKey(tinyURL)) throw new RecordNotFoundException("Mapping for tinyURL to original not found");
-     return tinyURLMap.get(tinyURL);
-}
 	
+
 }
