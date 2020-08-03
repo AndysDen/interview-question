@@ -18,3 +18,5 @@ spring:
     console:
       enabled: false
 
+cron: # every 30 minutes
+  expression: "0 0/30 * * * *"

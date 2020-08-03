@@ -3,6 +3,8 @@ package com.interview.backbase.tinyurl.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +22,7 @@ public class URLMappingRepositoryTest {
 	@DirtiesContext
 	public void testURLMappingExist() {
 
-		URLMapping urlMapping = urlMappingRepository.save(new URLMapping("http://testURL.com", "test"));
+		URLMapping urlMapping = urlMappingRepository.save(new URLMapping("http://testURL.com", "test",LocalDateTime.now()));
 		assertEquals("http://testURL.com",
 				urlMappingRepository.findByTinyURL(urlMapping.getTinyURL()).get().getOriginalURL());
 	}

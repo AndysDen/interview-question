@@ -1,5 +1,7 @@
 package com.interview.backbase.tinyurl.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ public class TinyURLConversionService {
 	public String convertToTinyURL(String originalURL) {
 
 		String tinyURL = urlConverter.convertURL(originalURL);
-		URLMapping urlMapping = new URLMapping(originalURL, tinyURL);
+		URLMapping urlMapping = new URLMapping(originalURL, tinyURL,LocalDateTime.now());
 		urlMappingRepository.save(urlMapping);
 		return tinyURL;
 	}
